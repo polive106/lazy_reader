@@ -1,0 +1,6 @@
+<% if @articles_found %>
+<p>Yay! We found <%= @articles_found.keys.length %> source(s) about your subject. Please select one.</p>
+<% @articles_found.each do |source, article| %>
+  <%= link_to source, articles_path(article: article), method: 'post' %>
+<% end %>
+<% end %>

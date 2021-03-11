@@ -1,0 +1,7 @@
+<% if @articles_found %>
+  <ul>
+    <% @articles_found.each do |source, article| %>
+    <li><%= source %></li>
+    <% end %>
+  </ul>
+<% end %>

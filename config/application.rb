@@ -24,7 +24,7 @@ module LazyReader
     config.generators do |generate|
       generate.assets false
       generate.helper false
-      generate.test_framework :test_unit, fixture: false
+      generate.test_framework :test_unit
     end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
@@ -38,6 +38,6 @@ module LazyReader
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+    # config.generators.system_tests = nil
   end
 end

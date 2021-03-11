@@ -25,6 +25,6 @@ class ArticlesController < ApplicationController
     response = JSON.parse(RestClient.get(url))
     articles = response[1]
     urls = response[3]
-    top_article = {title: articles.first, url: urls.first }
+    top_article = {title: articles.first, url: urls.first, source: "wikipedia.com" }
   end
 end

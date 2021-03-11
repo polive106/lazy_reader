@@ -2,12 +2,13 @@ class ArticlesController < ApplicationController
 
     skip_before_action :authenticate_user!, only: [ :create, :find_sources ]
 
-  # def create
-  #   args = get_article_info("wikipedia.com", params[:article][:query])
-  #   article = Article.new(args)
-  #   article.save
-  # end
+  def create
+    @article = Article.new(params[:article])
+    @article.save
+    redirect_to article_path(@article)
+  end
 
+  # ask each supported source and collect articles
   def find_sources
     @articles_found = {}
     # Check wikipedia
@@ -24,6 +25,6 @@ class ArticlesController < ApplicationController
     response = JSON.parse(RestClient.get(url))
     articles = response[1]
     urls = response[3]
-    top_article = {title: articles.first, url: urls.first, source: "wikipedia.com" }
+    top_article = { title: articles.first, url: urls.first, source: "wikipedia.com" }
   end
 end

@@ -1,9 +1,9 @@
 class ArticlesController < ApplicationController
 
-    skip_before_action :authenticate_user!, only: [ :create, :find_sources ]
+    skip_before_action :authenticate_user!, only: [ :create, :find_sources, :show ]
 
   def create
-    @article = Article.new(params[:article])
+    @article = Article.new(article_params)
     @article.save
     redirect_to article_path(@article)
   end
@@ -16,6 +16,10 @@ class ArticlesController < ApplicationController
     render 'pages/home'
   end
 
+  def show
+    @article = Article.find(params[:id])
+  end
+
   private
 
   # On wikipedia.com, retrieve top search result url
@@ -26,5 +30,9 @@ class ArticlesController < ApplicationController
     articles = response[1]
     urls = response[3]
     top_article = { title: articles.first, url: urls.first, source: "wikipedia.com" }
+  end
+
+  def article_params
+    params.require(:article).permit(:source, :title, :url)
   end
 end

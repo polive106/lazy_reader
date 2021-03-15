@@ -16,3 +16,22 @@
   border: solid 1px $medium-blue;
 }
 
+.sources-found {
+  width: 100%;
+  text-align: center;
+  a {
+    border-radius: 30px;
+    border: solid 1px $medium-blue;
+    padding: 15px 30px;
+    color: $medium-blue;
+    text-transform: capitalize;
+    &:hover {
+      text-decoration: none;
+      color: white;
+      background: $medium-blue;
+    }
+  }
+  p {
+    margin-bottom: 2rem;
+  }
+}

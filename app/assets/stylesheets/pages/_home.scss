@@ -1,1 +1,18 @@
 // Specific CSS for your home-page
+.simple_form.article {
+ display: flex;
+ margin: 5rem 30%;
+ height: 3.5rem;
+  .form-group {
+  flex-grow: 1;
+  margin-bottom: 0;
+  }
+}
+
+.query-input {
+  display: flex;
+  height: 100%;
+  border-radius: 8px 0 0 8px;
+  border: solid 1px $medium-blue;
+}
+

@@ -1,6 +1,5 @@
 class ArticlesController < ApplicationController
-
-    skip_before_action :authenticate_user!, only: [ :create, :find_sources, :show ]
+  skip_before_action :authenticate_user!, only: [ :create, :find_sources, :show ]
 
   def create
     @article = Article.new(article_params)
@@ -18,18 +17,22 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    respond_to do |format|
+      format.html # will render a view by default
+      format.json { render json: @article }
+    end
   end
 
   private
 
   # On wikipedia.com, retrieve top search result url
   def top_article_wikipedia(query)
-    parsed_query = query.split(' ').map { |word| URI.escape(word) }.join('+')
+    parsed_query = query.split.map { |word| URI.escape(word) }.join('+')
     url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=#{parsed_query}"
     response = JSON.parse(RestClient.get(url))
     articles = response[1]
     urls = response[3]
-    top_article = { title: articles.first, url: urls.first, source: "wikipedia.com" }
+    { title: articles.first, url: urls.first, source: "wikipedia.com" }
   end
 
   def article_params

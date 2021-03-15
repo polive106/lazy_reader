@@ -39,5 +39,6 @@ module LazyReader
 
     # Don't generate system test files.
     # config.generators.system_tests = nil
+    # Access-Control-Allow-Origin
   end
 end

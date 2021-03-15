@@ -1,7 +1,7 @@
 
 <% if @articles_found %>
   <div class="sources-found">
-    <p>Yay! We found <%= @articles_found.keys.length %> source(s) about your subject. Please select one.</p>
+    <p>Yay! We found <%= pluralize(@articles_found.keys.length, 'source') %> about your subject. <%= "lease select one." if @articles_found.keys.length > 0 %></p>
     <% @articles_found.each do |source, article| %>
       <%= link_to source, articles_path(article: article), method: 'post' %>
     <% end %>

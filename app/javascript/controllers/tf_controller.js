@@ -14,9 +14,5 @@ export default class extends Controller {
       .then((data) => {
         console.log(data.content)
       })
-
-    // fetch(wikiApiUrl, {
-    //   headers: {"X-CSRF-Token": csrfToken()}
-    // }).then((response) => console.log(response))
   }
 }

@@ -1,4 +1,3 @@
-
 <% if @articles_found %>
   <div class="sources-found">
     <p>Yay! We found <%= pluralize(@articles_found.keys.length, 'source') %> on <%= @topic %>. <%= "Please select one." if @articles_found.keys.length > 1 %></p>

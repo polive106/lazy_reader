@@ -2,9 +2,8 @@ import { Controller } from "stimulus";
 import { csrfToken } from "@rails/ujs";
 import * as qna from '@tensorflow-models/qna';
 export default class extends Controller {
-  static targets = ['root', 'url']
+  static targets = ['root', 'url', 'questionInput', 'answer']
   connect() {
-    this.getAnswers()
   }
 
   getContent() {
@@ -19,14 +18,42 @@ export default class extends Controller {
       })
   };
 
-  async getAnswers() {
+  loadModel() {
+    return qna.load()
+  }
+
+  async getAnswer() {
+    if (!this.model) {
+      console.log("loading model")
+      this.model = await qna.load();
+    } else {
+      console.log("model already loaded")
+    }
     console.log('loading passage')
     const passage = await this.getContent()
-    const question = "Daft Punk left Virgin for ?";
-    console.log('loading model')
-    const model = await qna.load();
-    console.log('model loaded')
-    const answers = await model.findAnswers(question, passage);
-    console.log(answers)
+    const question = await this.getQuestion();
+    console.log("getting answers")
+    const answers = await this.model.findAnswers(question, passage);
+    this.appendAnswer(answers); // && to add answer
+  }
+
+  getQuestion() {
+    return this.questionInputTargets.pop().value // returns last question
+  }
+
+  appendAnswer(answerArray) {
+    const answer = answerArray[0] ? answerArray[0].text : "I don't have that information"
+    this.rootTarget.insertAdjacentHTML('beforeend', `<p>${answer}</p>`)
+    this.rootTarget.insertAdjacentHTML('beforeend',
+      '<div class="input-group">\
+        <input type="text" class="form-control" placeholder="Ask me anything!" data-tf-target="questionInput">\
+        <div class="input-group-append">\
+          <button class="btn btn-primary" type="button" data-action="click->tf#getAnswer">\
+            <i class="fas fa-paper-plane"></i>\
+          </button>\
+        </div>\
+      </div>'
+    )
+
   }
 }

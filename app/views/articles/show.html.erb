@@ -1,4 +1,7 @@
-<div data-controller="tf" data-article-uid="<%= @article.id %>" data-url="<%= article_path(@article) %>" data-tf-target="root" >
-<h1><%= @article.title %></h1>
-  <p>Read the full article on <%= link_to @article.source, @article.url, {'data-tf-target': 'url'} %></p>
+<div class="container">
+  <div data-controller="tf" data-article-uid="<%= @article.id %>" data-url="<%= article_path(@article) %>" data-tf-target="root" >
+    <h1><%= @article.title %></h1>
+    <p>Read the full article on <%= link_to @article.source, @article.url,  target: "_blank", data: {'tf-target': 'url'} %></p>
+    <%= render 'shared/question' %>
+  </div>
 </div>

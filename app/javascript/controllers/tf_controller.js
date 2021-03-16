@@ -18,14 +18,10 @@ export default class extends Controller {
       })
   };
 
-  loadModel() {
-    return qna.load()
-  }
-
   async getAnswer() {
     if (!this.model) {
       console.log("loading model")
-      this.model = await qna.load();
+      this.model = await qna.load(); //loading model if not already done --> loading it in an instance variable
     } else {
       console.log("model already loaded")
     }

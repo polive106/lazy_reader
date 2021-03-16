@@ -11,3 +11,14 @@
   color: white;
 }
 
+.query-btn {
+  background: $medium-blue;
+  border-radius: 0 8px 8px 0;
+  color: white;
+  font-weight: bold;
+  padding: 0 25px;
+  &:hover {
+    color: white;
+    background: #22263B;
+  }
+}

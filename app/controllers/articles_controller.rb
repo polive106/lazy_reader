@@ -10,6 +10,7 @@ class ArticlesController < ApplicationController
   # ask each supported source and collect articles
   def find_sources
     @articles_found = {}
+    @topic = params[:article][:q]
     # Check wikipedia
     @articles_found[:wikipedia] = top_article_wikipedia(params[:article][:q])
     render 'pages/home'

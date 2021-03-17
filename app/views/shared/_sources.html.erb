@@ -1,10 +1,19 @@
 <% if @articles_found %>
-  <div class="sources-found">
-    <p>Yay! We found <%= pluralize(@articles_found.keys.length, 'source') %> on "<%= @topic %>". <%= "Please select one." if @articles_found.keys.length > 1 %></p>
-    <% @articles_found.each do |source, article| %>
-      <%= link_to articles_path(article: article), method: 'post' do %>
-        <%= source %> <span class="tooltiptext"><%= article[:title] %></span>
+  <% if @articles_found.count == 0 %>
+    <div class="sources-found">
+      <p>Sorry, we couldn't find any article on "<%= @topic %>". Feel free to search for something else.</p>
+    </div>
+  <% end %>
+  <% if @articles_found.count > 0 %>
+    <div class="sources-found">
+      <p>Yay! We found <%= pluralize(@articles_found.keys.length, 'source') %> on "<%= @topic %>". <%= "Please select one." if @articles_found.keys.length > 1 %></p>
+      <% @articles_found.each do |source, article| %>
+        <% if !article.nil? %>
+          <%= link_to articles_path(article: article), method: 'post' do %>
+            <%= source %> <span class="tooltiptext"><%= article[:title] %></span>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 <% end %>

@@ -31,14 +31,6 @@ class ArticlesController < ApplicationController
 
   private
 
-  def extract_article_content(wiki_id)
-    url = "https://en.wikipedia.org/w/api.php?action=parse&page=#{wiki_id}&prop=wikitext&section=0&format=json"
-    response = JSON.parse(RestClient.get(url))
-    content = response['parse']['wikitext']['*']
-    puts content
-    return content
-  end
-
   def scrap_article_content(article)
     html_file = RestClient.get(article.url)
     html_doc = Nokogiri::HTML(html_file)

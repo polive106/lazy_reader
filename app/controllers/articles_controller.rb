@@ -45,13 +45,19 @@ class ArticlesController < ApplicationController
     parsed_query = query.split.map { |word| URI.escape(word) }.join('+')
     url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=#{parsed_query}"
     response = RestClient.get(url)
-    if response.code != 200
+    if response.code != 200 # wikipedia's responses are almost always 200 (expect FATAL) but may contain errors or warnings
       nil
     else
       response_content = JSON.parse(response)
-      articles = response_content[1]
-      urls = response_content[3]
-      { title: articles.first, url: urls.first, source: "wikipedia.com" }
+      # search didn't yield any result
+      if response_content[1] == []
+        nil
+      # search was successful
+      else
+        articles = response_content[1]
+        urls = response_content[3]
+        { title: articles.first, url: urls.first, source: "wikipedia.com" }
+      end
     end
   end
 

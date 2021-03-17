@@ -13,7 +13,6 @@ class ArticlesController < ApplicationController
     @topic = params[:article][:q]
     # Check wikipedia
     @articles_found[:wikipedia] = top_article_wikipedia(params[:article][:q])
-    @articles_found[:test] = nil
     @articles_found.filter! { |_source, article| article.nil? }
     render 'pages/home'
   end
@@ -49,8 +48,7 @@ class ArticlesController < ApplicationController
       nil
     else
       response_content = JSON.parse(response)
-      # search didn't yield any result
-      if response_content[1] == []
+      if response_content[1] == [] # search didn't yield any result
         nil
       # search was successful
       else

@@ -13,6 +13,7 @@ class ArticlesController < ApplicationController
     @topic = params[:article][:q]
     # Check wikipedia
     @articles_found[:wikipedia] = top_article_wikipedia(params[:article][:q])
+    @articles_found.filter { |x| x.nil? }
     render 'pages/home'
   end
 
@@ -42,10 +43,15 @@ class ArticlesController < ApplicationController
   def top_article_wikipedia(query)
     parsed_query = query.split.map { |word| URI.escape(word) }.join('+')
     url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=#{parsed_query}"
-    response = JSON.parse(RestClient.get(url))
-    articles = response[1]
-    urls = response[3]
-    { title: articles.first, url: urls.first, source: "wikipedia.com" }
+    response = RestClient.get(url)
+    if response.code != 200
+      nil
+    else
+      response_content = JSON.parse(response)
+      articles = response_content[1]
+      urls = response_content[3]
+      { title: articles.first, url: urls.first, source: "wikipedia.com" }
+    end
   end
 
   def article_params

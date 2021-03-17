@@ -25,6 +25,7 @@
     padding: 15px 30px;
     color: $medium-blue;
     text-transform: capitalize;
+    position: relative;
     &:hover {
       text-decoration: none;
       color: white;
@@ -34,4 +35,26 @@
   p {
     margin-bottom: 2rem;
   }
+}
+
+
+a .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;
+  color: #414c7e;
+  text-align: center;
+  padding: 5px 0;
+  border: 1px #414c7e solid;
+  border-radius: 20px;
+  position: absolute;
+  z-index: 1;
+  bottom: -40px;
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+  transform: translate(-50%, -50%);
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+a:hover .tooltiptext {
+  visibility: visible;
 }

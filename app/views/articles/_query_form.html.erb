@@ -1,4 +1,4 @@
 <%= simple_form_for :article, url: 'sources', html: {id: 'query-form'}, remote: true do |f| %>
-<%= f.input :q, placeholder: "Type a query", label: false, input_html: {value: @topic, class: 'query-input'}  %>
-<%= f.button :submit, "Let's go", name: nil, class: 'query-btn', disabled: true %>
+  <%= f.input :q, placeholder: "Type a query", label: false, input_html: {value: @topic, class: 'query-input'}  %>
+  <%= f.button :submit, "Let's go", name: nil, class: 'query-btn', disabled: true %>
 <% end %>

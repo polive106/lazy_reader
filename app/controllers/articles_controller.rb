@@ -18,6 +18,11 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    if @article.content.nil?
+      wiki_id = @article.url.split('/').pop()
+      @article.content = scrap_article_content(@article)
+      @article.save
+    end
     respond_to do |format|
       format.html # will render a view by default
       format.json { render json: @article }
@@ -25,6 +30,21 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def extract_article_content(wiki_id)
+    url = "https://en.wikipedia.org/w/api.php?action=parse&page=#{wiki_id}&prop=wikitext&section=0&format=json"
+    response = JSON.parse(RestClient.get(url))
+    content = response['parse']['wikitext']['*']
+    puts content
+    return content
+  end
+
+  def scrap_article_content(article)
+    html_file = RestClient.get(article.url)
+    html_doc = Nokogiri::HTML(html_file)
+    content = html_doc.search('p').reduce("") { |acc, elt| acc + elt.text.strip }
+    article.content = content[0..5000]
+  end
 
   # On wikipedia.com, retrieve top search result url
   def top_article_wikipedia(query)

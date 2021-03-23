@@ -39,7 +39,7 @@ export default class extends Controller {
 
   appendAnswer(answerArray) {
     const answer = answerArray[0] ? answerArray[0].text : "I don't have that information"
-    this.rootTarget.insertAdjacentHTML('beforeend', `<p>${answer}</p>`)
+    this.rootTarget.insertAdjacentHTML('beforeend', `<p class="answer">${answer}</p>`)
     this.rootTarget.insertAdjacentHTML('beforeend',
       '<div class="input-group">\
         <input type="text" class="form-control" placeholder="Ask me anything!" data-tf-target="questionInput">\

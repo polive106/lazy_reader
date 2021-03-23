@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
     @topic = params[:article][:q]
     # Check wikipedia
     @articles_found[:wikipedia] = top_article_wikipedia(params[:article][:q])
-    @articles_found.filter! { |_source, article| article.nil? }
+    @articles_found.filter! { |_source, article| !article.nil? }
     render 'pages/home'
   end
 
